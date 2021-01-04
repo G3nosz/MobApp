@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/listItem2"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:gravity="right"
+            android:text="Total cost:"
+            android:layout_width="320dp"
+            android:layout_height="30dp"
+            android:id="@+id/teksto_pozicija" />
+
+        <TextView
+            android:gravity="center"
+            android:text="Suma"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/sumo_pozicija" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/cartListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
+
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/imageVaizdas"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
+        android:src="@drawable/ic_baseline_shopping_basket_24"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/pirmasItemView1"
+        android:layout_width="214dp"
+        android:layout_height="90dp"
+        android:gravity="center"
+        android:text="Pirmas"
+        android:textAlignment="center"
+        android:textSize="22dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/antrasItemView1"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="Antras" />
+
+        <TextView
+            android:id="@+id/treciasItemView1"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="Trecias" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

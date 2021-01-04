@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ShoppingApp</string>
+    <string name="button">Button</string>
+    <string name="add_item">Add Item</string>
+    <string name="appName">Shopping App</string>
+
+    <string name="search_hint">Search student</string>
+    <string name="channel_name">ShoppingApp</string>
+    <string name="channel_description">ReminderNotification</string>
+</resources>

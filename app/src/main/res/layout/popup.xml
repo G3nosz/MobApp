@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/popup_background"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/newicon"
+        android:layout_width="122dp"
+        android:layout_height="121dp"
+        android:background="@drawable/ic_baseline_add_shopping_cart_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.072" />
+
+    <EditText
+        android:id="@+id/newCartName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        android:hint="Cart name"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newicon"
+        app:layout_constraintVertical_bias="0.025"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+    <EditText
+        android:id="@+id/newCartLimit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:hint="Estimated cart cost"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newCartName"
+        app:layout_constraintVertical_bias="0.057"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/dateReminder"
+        android:layout_width="202dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="92dp"
+        android:text="REMINDER DATE"
+        android:background="@drawable/rounder_button"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newCartLimit"
+        app:layout_constraintVertical_bias="0.069" />
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="146dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        android:text="SELECTED DATE"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toEndOf="@+id/dateReminder"
+        app:layout_constraintTop_toBottomOf="@+id/newCartLimit" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="146dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/black"
+        android:layout_marginEnd="8dp"
+        android:text="SELECTED TIME"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toEndOf="@+id/timeReminder"
+        app:layout_constraintTop_toBottomOf="@+id/dateText" />
+
+    <Button
+        android:id="@+id/timeReminder"
+        android:layout_width="202dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="92dp"
+        android:text="REMINDER TIME"
+        android:background="@drawable/rounder_button"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateReminder"
+        app:layout_constraintVertical_bias="0.057" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="137dp"
+        android:layout_height="72dp"
+        android:text="CANCEL"
+        android:background="@drawable/rounder_button"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.562"
+        app:layout_constraintStart_toEndOf="@+id/saveButton"
+        app:layout_constraintTop_toBottomOf="@+id/timeReminder"
+        app:layout_constraintVertical_bias="0.238" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="137dp"
+        android:layout_height="72dp"
+        android:text="SAVE"
+        android:background="@drawable/rounder_button"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.149"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeReminder"
+        app:layout_constraintVertical_bias="0.238" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
