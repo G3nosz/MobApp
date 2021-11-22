@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class NewCart{ //tai cia bus laikomas item masyvas su ivairia informacija
+public class NewCart{
     List<NewItem> items = new ArrayList<>();
     private String name;
     private int itemCount;
@@ -56,7 +56,6 @@ public class NewCart{ //tai cia bus laikomas item masyvas su ivairia informacija
         items.add(item);
         itemCount++;
 
-        //iskarto tuomet reikia kviesti metoda pakeisti itemCost
     }
     private void removeItem(int identity)
     {
@@ -122,7 +121,6 @@ public class NewCart{ //tai cia bus laikomas item masyvas su ivairia informacija
         this.id = d;
     }
 
-    //sitas turetu automatiskai apsiskaicuoti pagal tai kiek yra item ir kainas
     public void setCount(int count){
         this.itemCount = count;
     }

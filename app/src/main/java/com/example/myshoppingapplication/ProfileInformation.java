@@ -7,20 +7,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
-
 public class ProfileInformation extends AppCompatActivity {
     DataBase dataBaseHelper;
     private TextView first, second, third, fourth;
-    Profile laikinas;
+    Profile temp;
     private Context context = this;
-    private Button pirmas;
+    private Button firstButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +32,14 @@ public class ProfileInformation extends AppCompatActivity {
 
         dataBaseHelper = new DataBase(ProfileInformation.this);
 
-        laikinas = dataBaseHelper.getProfileInfo();
-        first.setText(String.valueOf(laikinas.getSpent()));
-        second.setText(String.valueOf(laikinas.getSaved()));
-        third.setText(String.valueOf(laikinas.getCarts()));
-        fourth.setText(String.valueOf(laikinas.getItems()));
-        pirmas = (Button) findViewById(R.id.settings);
+        temp = dataBaseHelper.getProfileInfo();
+        first.setText(String.valueOf(temp.getSpent()));
+        second.setText(String.valueOf(temp.getSaved()));
+        third.setText(String.valueOf(temp.getCarts()));
+        fourth.setText(String.valueOf(temp.getItems()));
+        firstButton = (Button) findViewById(R.id.settings);
 
-        pirmas.setOnClickListener(new View.OnClickListener() {
+        firstButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SettingsActivity.class);

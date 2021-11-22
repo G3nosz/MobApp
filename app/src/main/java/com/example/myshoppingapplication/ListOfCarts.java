@@ -40,25 +40,25 @@ public class ListOfCarts extends AppCompatActivity {
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog, dialog1, dialog2, dialog3;
-    private EditText newcart_name, newcart_cost, newcart_date, newcart_time;
-    private Button newcart_save, newcart_cancel, edit_cart, delete_cart, _cancel;
-    private Button newcart_date_picker, newcart_time_picker;
-    private TextView bendra_suma, date_view, time_view;
+    private EditText newcartName, newcartCost;
+    private Button newcartSave, newcartCancel, editCart, deleteCart, _cancel;
+    private Button newcartDatePicker, newcartTimePicker;
+    private TextView wholeCost, dateView, timeView;
 
     DataBase dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cartlist); //cartitemdesing
+        setContentView(R.layout.cartlist);
         createNotificationChannel();
         myListView = (ListView) findViewById(R.id.cartListView); //cartListView
-        bendra_suma = (TextView) findViewById(R.id.sumo_pozicija);
+        wholeCost = (TextView) findViewById(R.id.sumo_pozicija);
         dataBaseHelper = new DataBase(ListOfCarts.this);
         ShowCartsOnListView(dataBaseHelper);
 
         double cost = dataBaseHelper.getAllCartsCost();
-        bendra_suma.setText(String.valueOf(cost));
+        wholeCost.setText(String.valueOf(cost));
 
         myListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
@@ -82,7 +82,7 @@ public class ListOfCarts extends AppCompatActivity {
         dataBaseHelper = new DataBase(ListOfCarts.this);
         ShowCartsOnListView(dataBaseHelper);
         double cost = dataBaseHelper.getAllCartsCost();
-        bendra_suma.setText(String.valueOf(cost));
+        wholeCost.setText(String.valueOf(cost));
     }
     private void selectAction(NewCart value){
         final  View popUpView = getLayoutInflater().inflate(R.layout.list_of_items_action_layout, null);
@@ -94,12 +94,12 @@ public class ListOfCarts extends AppCompatActivity {
         optionspu.update(0, 150, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         optionspu.showAtLocation(popUpView, Gravity.BOTTOM, 0, 300);
 
-        delete_cart = (Button) popUpView.findViewById(R.id.deleteItem);
-        edit_cart = (Button) popUpView.findViewById(R.id.editItem);
-        delete_cart.setBackgroundColor(getResources().getColor(R.color.Buttonred));
+        deleteCart = (Button) popUpView.findViewById(R.id.deleteItem);
+        editCart = (Button) popUpView.findViewById(R.id.editItem);
+        deleteCart.setBackgroundColor(getResources().getColor(R.color.Buttonred));
 
         final NewCart value1 = value;
-        edit_cart.setOnClickListener(new View.OnClickListener() {
+        editCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editCart(value1);
@@ -107,7 +107,7 @@ public class ListOfCarts extends AppCompatActivity {
                 optionspu.dismiss();
             }
         });
-        delete_cart.setOnClickListener(new View.OnClickListener() {
+        deleteCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteCart(value1);
@@ -119,14 +119,14 @@ public class ListOfCarts extends AppCompatActivity {
     public void deleteCart(NewCart value){
         dialogBuilder = new AlertDialog.Builder(this);
         final  View popUpView = getLayoutInflater().inflate(R.layout.confirmation_popup, null);
-        delete_cart = (Button) popUpView.findViewById(R.id.deleteYes);
+        deleteCart = (Button) popUpView.findViewById(R.id.deleteYes);
         _cancel = (Button) popUpView.findViewById(R.id.deleteNo);
         dialogBuilder.setView(popUpView);
         dialog2 = dialogBuilder.create();
         dialog2.show();
 
         final NewCart value1 = value;
-        delete_cart.setOnClickListener(new View.OnClickListener() {
+        deleteCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataBaseHelper.deleteCart(value1);
@@ -219,11 +219,11 @@ public class ListOfCarts extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 temp.setYear(year);
-                int m = month + 1;
+                int m = month + 1;//months is from 0
                 temp.setMonth(m);
                 temp.setDay(day);
-                String text = year + "/" + m + "/" + day;//nes month skaiciuoja nuo 0
-                date_view.setText(text);
+                String text = year + "/" + m + "/" + day;
+                dateView.setText(text);
             }
         }, YEAR, MONTH, DAY);
         datePickerDialog.show();
@@ -240,7 +240,7 @@ public class ListOfCarts extends AppCompatActivity {
                 temp.setHour(i);
                 temp.setMinute(i1);
                 String time = i + ":" + i1;
-                time_view.setText(time);
+                timeView.setText(time);
             }
         }, HOUR, MIN, true);
         timePickerDialog.show();
@@ -249,46 +249,46 @@ public class ListOfCarts extends AppCompatActivity {
     public void createNewCart(){
         dialogBuilder = new AlertDialog.Builder(this);
         final  View popUpView = getLayoutInflater().inflate(R.layout.popup, null);
-        newcart_name = (EditText) popUpView.findViewById(R.id.newCartName);
-        newcart_cost = (EditText) popUpView.findViewById(R.id.newCartLimit);
-        newcart_date_picker = (Button) popUpView.findViewById(R.id.dateReminder);
-        newcart_time_picker = (Button) popUpView.findViewById(R.id.timeReminder);
-        date_view = (TextView)  popUpView.findViewById(R.id.dateText);
-        time_view = (TextView)  popUpView.findViewById(R.id.timeText);
+        newcartName = (EditText) popUpView.findViewById(R.id.newCartName);
+        newcartCost = (EditText) popUpView.findViewById(R.id.newCartLimit);
+        newcartDatePicker = (Button) popUpView.findViewById(R.id.dateReminder);
+        newcartTimePicker = (Button) popUpView.findViewById(R.id.timeReminder);
+        dateView = (TextView)  popUpView.findViewById(R.id.dateText);
+        timeView = (TextView)  popUpView.findViewById(R.id.timeText);
 
-        newcart_save = (Button) popUpView.findViewById(R.id.saveButton);
-        newcart_cancel = (Button) popUpView.findViewById(R.id.cancelButton);
+        newcartSave = (Button) popUpView.findViewById(R.id.saveButton);
+        newcartCancel = (Button) popUpView.findViewById(R.id.cancelButton);
 
         dialogBuilder.setView(popUpView);
         dialog = dialogBuilder.create();
         dialog.show();
         final NewCart tmp = new NewCart();
-        newcart_date_picker.setOnClickListener(new View.OnClickListener() {
+        newcartDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dateButton(tmp);
             }
         });
 
-        newcart_time_picker.setOnClickListener(new View.OnClickListener() {
+        newcartTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 timeButton(tmp);
             }
         });
-        newcart_save.setOnClickListener(new View.OnClickListener() {
+        newcartSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 NewCart temp = new NewCart();
                 try{
 
-                    if(newcart_name.getText().toString() == ""){
+                    if(newcartName.getText().toString() == ""){
                         Toast.makeText(getApplicationContext(), "Missing name", Toast.LENGTH_LONG).show();
                     }
                     else{
-                        temp.setName(newcart_name.getText().toString());
-                        temp.setLimit(Double.parseDouble(newcart_cost.getText().toString()));
+                        temp.setName(newcartName.getText().toString());
+                        temp.setLimit(Double.parseDouble(newcartCost.getText().toString()));
                         temp.setYear(tmp.getYear());
                         temp.setMonth(tmp.getMonth());
                         temp.setDay(tmp.getDay());
@@ -316,7 +316,7 @@ public class ListOfCarts extends AppCompatActivity {
                 ShowCartsOnListView(dataBaseHelper);
             }
         });
-        newcart_cancel.setOnClickListener(new View.OnClickListener() {
+        newcartCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
@@ -372,12 +372,12 @@ public class ListOfCarts extends AppCompatActivity {
     public void editCart(final NewCart value){
         dialogBuilder = new AlertDialog.Builder(this);
         final  View popUpView = getLayoutInflater().inflate(R.layout.popup, null);
-        newcart_name = (EditText) popUpView.findViewById(R.id.newCartName);
-        newcart_cost = (EditText) popUpView.findViewById(R.id.newCartLimit);
-        newcart_date_picker = (Button) popUpView.findViewById(R.id.dateReminder);
-        newcart_time_picker = (Button) popUpView.findViewById(R.id.timeReminder);
-        date_view = (TextView)  popUpView.findViewById(R.id.dateText);
-        time_view = (TextView)  popUpView.findViewById(R.id.timeText);
+        newcartName = (EditText) popUpView.findViewById(R.id.newCartName);
+        newcartCost = (EditText) popUpView.findViewById(R.id.newCartLimit);
+        newcartDatePicker = (Button) popUpView.findViewById(R.id.dateReminder);
+        newcartTimePicker = (Button) popUpView.findViewById(R.id.timeReminder);
+        dateView = (TextView)  popUpView.findViewById(R.id.dateText);
+        timeView = (TextView)  popUpView.findViewById(R.id.timeText);
 
         final String pirmas = String.valueOf(value.getName());
         final String antras = String.valueOf(value.getLimit());
@@ -389,8 +389,8 @@ public class ListOfCarts extends AppCompatActivity {
         else{
             Toast.makeText(getApplicationContext(), "Failed to load info", Toast.LENGTH_LONG).show();
         }
-        newcart_name.setText(String.valueOf(value.getName()));
-        newcart_cost.setText(String.valueOf(value.getLimit()));
+        newcartName.setText(String.valueOf(value.getName()));
+        newcartCost.setText(String.valueOf(value.getLimit()));
         Log.i("Name", pirmas);
 
         final String y = String.valueOf(value.getYear());
@@ -400,53 +400,52 @@ public class ListOfCarts extends AppCompatActivity {
         final String min = String.valueOf(value.getMinute());
         final String date = y + "/" + m + "/" + d;
         final String time = h + ":" + min;
-        date_view.setText(date);
-        time_view.setText(time);
+        dateView.setText(date);
+        timeView.setText(time);
 
-        newcart_save = (Button) popUpView.findViewById(R.id.saveButton);
-        newcart_cancel = (Button) popUpView.findViewById(R.id.cancelButton);
+        newcartSave = (Button) popUpView.findViewById(R.id.saveButton);
+        newcartCancel = (Button) popUpView.findViewById(R.id.cancelButton);
 
         dialogBuilder.setView(popUpView);
         dialog3 = dialogBuilder.create();
         dialog3.show();
         final NewCart tmp = new NewCart();
-        newcart_date_picker.setOnClickListener(new View.OnClickListener() {
+        newcartDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dateButton(tmp);
             }
         });
-        newcart_time_picker.setOnClickListener(new View.OnClickListener() {
+        newcartTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 timeButton(tmp);
             }
         });
-        newcart_save.setOnClickListener(new View.OnClickListener() {
+        newcartSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //aprasomas save mygtukas, tai tiesiog sukuriamas tuscias cart
-                //ir jam priskiriamas pavadinimas
+
                 NewCart temp = new NewCart();
                 try{
 
-                    temp.setName(newcart_name.getText().toString());
-                    temp.setLimit(Double.parseDouble(newcart_cost.getText().toString()));
-                    if(tmp.getYear() == 0 && tmp.getMinute() == 0 && tmp.getDay() == 0){ //tai jeigu nera parinktas laikas
-                        temp.setYear(value.getYear()); //sudedu atgal senus tuos laikus vieto 0
+                    temp.setName(newcartName.getText().toString());
+                    temp.setLimit(Double.parseDouble(newcartCost.getText().toString()));
+                    if(tmp.getYear() == 0 && tmp.getMinute() == 0 && tmp.getDay() == 0){ //if time is not set
+                        temp.setYear(value.getYear());
                         temp.setMonth(value.getMonth());
                         temp.setDay(value.getDay());
                     }
-                    else{ //kitu atveju priskiriu nauja parinkta
+                    else{
                         temp.setYear(tmp.getYear());
                         temp.setMonth(tmp.getMonth());
                         temp.setDay(tmp.getDay());
                     }
-                    if(tmp.getHour() == 0 && tmp.getMinute() == 0){ //jeigu neparinktos valandos irasau senus vietoj 0
+                    if(tmp.getHour() == 0 && tmp.getMinute() == 0){
                         temp.setHour(value.getHour());
                         temp.setMinute(value.getMinute());
                     }
-                    else{ //jeigu parinktos, nustatau reiksmes
+                    else{
                         temp.setHour(tmp.getHour());
                         temp.setMinute(tmp.getMinute());
                     }
@@ -468,7 +467,7 @@ public class ListOfCarts extends AppCompatActivity {
             }
         });
 
-        newcart_cancel.setOnClickListener(new View.OnClickListener() {
+        newcartCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog3.dismiss();

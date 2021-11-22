@@ -21,42 +21,42 @@ import java.util.List;
 
 public class DataBase extends SQLiteOpenHelper {
 
-    public static final String CUSTOMER_TABLE = "CUSTOMER_TABLE";
-    public static final String CART_NAME = "CART_NAME";
-    public static final String CART_COUNT = "CART_COUNT";
-    public static final String CART_COST = "CART_COST";
-    public static final String CART_ID = "CART_ID";
-    public static final String CART_STATE = "CART_STATE";
+    private static final String CUSTOMER_TABLE = "CUSTOMER_TABLE";
+    private static final String CART_NAME = "CART_NAME";
+    private static final String CART_COUNT = "CART_COUNT";
+    private static final String CART_COST = "CART_COST";
+    private static final String CART_ID = "CART_ID";
+    private static final String CART_STATE = "CART_STATE";
 
 
-    public static final String CART_YEAR = "CART_YEAR";
-    public static final String CART_MONTH = "CART_MONTH";
-    public static final String CART_DAY = "CART_DAY";
+    private static final String CART_YEAR = "CART_YEAR";
+    private static final String CART_MONTH = "CART_MONTH";
+    private static final String CART_DAY = "CART_DAY";
 
-    public static final String CART_HOUR = "CART_HOUR";
-    public static final String CART_MINUTE = "CART_MINUTE";
-    public static final String CART_LIMIT = "CART_LIMIT";
+    private static final String CART_HOUR = "CART_HOUR";
+    private static final String CART_MINUTE = "CART_MINUTE";
+    private static final String CART_LIMIT = "CART_LIMIT";
 
 
-    public static final String ITEM_TABLE = "ITEM_TABLE";
-    public static final String ITEM_NAME = "ITEM_NAME";
-    public static final String ITEM_COUNT = "ITEM_COUNT";
-    public static final String ITEM_COST = "ITEM_COST";
-    public static final String ITEM_ID = "ITEM_ID";
-    public static final String ITEM_STATE = "ITEM_STATE";
-    public static final String ITEM_CART = "ITEM_CART";
-    public static final String ITEM_IMAGID = "ITEM_IMAGID";
+    private static final String ITEM_TABLE = "ITEM_TABLE";
+    private static final String ITEM_NAME = "ITEM_NAME";
+    private static final String ITEM_COUNT = "ITEM_COUNT";
+    private static final String ITEM_COST = "ITEM_COST";
+    private static final String ITEM_ID = "ITEM_ID";
+    private static final String ITEM_STATE = "ITEM_STATE";
+    private static final String ITEM_CART = "ITEM_CART";
+    private static final String ITEM_IMAGID = "ITEM_IMAGID";
 
-    public static final String PROFILE_TABLE = "PROFILE_TABLE";
-    public static final String PROFILE_SPENT = "PROFILE_SPENT";
-    public static final String PROFILE_SAVED = "PROFILE_SAVED";
-    public static final String PROFILE_CARTS = "PROFILE_CARTS";
-    public static final String PROFILE_ITEMS = "PROFILE_ITEMS";
+    private static final String PROFILE_TABLE = "PROFILE_TABLE";
+    private static final String PROFILE_SPENT = "PROFILE_SPENT";
+    private static final String PROFILE_SAVED = "PROFILE_SAVED";
+    private static final String PROFILE_CARTS = "PROFILE_CARTS";
+    private static final String PROFILE_ITEMS = "PROFILE_ITEMS";
 
-    public static final String IMAGE_TABLE = "IMAGE_TABLE";
-    public static final String IMAGE_NAME = "IMAGE_NAME";
-    public static final String IMAGE_BITMAP = "IMAGE_BITMAP";
-    public static final String IMAGE_ID = "IMAGE_ID";
+    private static final String IMAGE_TABLE = "IMAGE_TABLE";
+    private static final String IMAGE_NAME = "IMAGE_NAME";
+    private static final String IMAGE_BITMAP = "IMAGE_BITMAP";
+    private static final String IMAGE_ID = "IMAGE_ID";
     private ByteArrayOutputStream objetByteArrayOutputStream;
     private byte[] imageInBytes;
 
@@ -282,7 +282,7 @@ public class DataBase extends SQLiteOpenHelper {
             Bitmap imageToStoreBitmap = item.getImage();
             objetByteArrayOutputStream = new ByteArrayOutputStream();
             imageToStoreBitmap.compress(Bitmap.CompressFormat.JPEG, 100, objetByteArrayOutputStream);
-            imageInBytes = objetByteArrayOutputStream.toByteArray(); //konvertuoji i byte array
+            imageInBytes = objetByteArrayOutputStream.toByteArray(); //convert to byte array
             cv.put(IMAGE_BITMAP, imageInBytes);
         }
         catch (Exception e){
@@ -290,7 +290,7 @@ public class DataBase extends SQLiteOpenHelper {
             return false;
         }
 
-        if (searchItem(cartid, item.getName()) == 0) {//tikriname ar jau yra toks item, tokiu vardu
+        if (searchItem(cartid, item.getName()) == 0) {//check if exists
             long insert = db.insert(ITEM_TABLE, null, cv);
             if (insert == -1) {
                 db.close();
@@ -306,7 +306,7 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-    //tarp to cart negali buti 2 item su tuo paciu cardu
+    //cant have two items with the same name
     public int searchItem(int cartid, String name) {
         SQLiteDatabase base = this.getReadableDatabase();
         String query = "SELECT * FROM " + ITEM_TABLE + " WHERE " + ITEM_CART + " = " + cartid + " AND " + ITEM_NAME + " = '" + name + "'";
@@ -321,14 +321,14 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     public boolean updateItem(NewItem item, int cartid, String item_name) {
-        //search for id in db and if found the delete it
+        //search for id in db and if found then delete it
         SQLiteDatabase base = this.getWritableDatabase();    //'"+ item.getName() +"'"
 
         try{
             Bitmap imageToStoreBitmap = item.getImage();
             objetByteArrayOutputStream = new ByteArrayOutputStream();
             imageToStoreBitmap.compress(Bitmap.CompressFormat.JPEG, 100, objetByteArrayOutputStream);
-            imageInBytes = objetByteArrayOutputStream.toByteArray(); //konvertuoji i byte array
+            imageInBytes = objetByteArrayOutputStream.toByteArray(); //convert to byte array
             //cv.put(IMAGE_BITMAP, imageInBytes);
         }
         catch (Exception e){
@@ -424,10 +424,10 @@ public class DataBase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null); //cursor is like result set
         if (cursor.moveToFirst()) {
-            temp++; //nes vistiek turi but tik viena eilute
+            temp++;
         }
 
-        return temp;// kad profilio eilutes nera
+        return temp;
     }
 
     public List<NewCart> getAllCarts() {
@@ -531,7 +531,7 @@ public class DataBase extends SQLiteOpenHelper {
     public List<NewItem> getAllItems(int cartid) {
         List<NewItem> returnList = new ArrayList<>();
 
-        String queryString = "SELECT * FROM " + ITEM_TABLE + " WHERE " + ITEM_CART + " = " + cartid; //paims tik tuos duomenis kurie priklauso jam
+        String queryString = "SELECT * FROM " + ITEM_TABLE + " WHERE " + ITEM_CART + " = " + cartid;
         SQLiteDatabase db = this.getReadableDatabase();
 
 
@@ -552,7 +552,7 @@ public class DataBase extends SQLiteOpenHelper {
                 Bitmap objectBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
 
 
-                NewItem newItem = new NewItem(cartName, cartCount, cartCost, cartID, cartState, objectBitmap); //reikia susidet kokie laukai yra
+                NewItem newItem = new NewItem(cartName, cartCount, cartCost, cartID, cartState, objectBitmap);
                 returnList.add(newItem);
 
             } while (cursor.moveToNext());
@@ -567,11 +567,11 @@ public class DataBase extends SQLiteOpenHelper {
     public List<NewItem> getSelectedItems(int cartid, String name) {
         List<NewItem> returnList = new ArrayList<>();
 
-        String queryString = "SELECT * FROM " + ITEM_TABLE + " WHERE " + ITEM_CART + " = " + cartid + " AND " + ITEM_NAME + " LIKE '" + name + "%'"; //paims tik tuos duomenis kurie priklauso jam
+        String queryString = "SELECT * FROM " + ITEM_TABLE + " WHERE " + ITEM_CART + " = " + cartid + " AND " + ITEM_NAME + " LIKE '" + name + "%'";
         SQLiteDatabase db = this.getReadableDatabase();
 
 
-        Cursor cursor = db.rawQuery(queryString, null); //cursor is like result set
+        Cursor cursor = db.rawQuery(queryString, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -582,11 +582,11 @@ public class DataBase extends SQLiteOpenHelper {
                 int cartState = cursor.getInt(4);
                 byte[] image = cursor.getBlob(6);
                 if(image.length < 1){
-                    Log.e("Bitai", "Negerai nuskaitant image bytes");
+                    Log.e("Bits", "Error reading images bits");
                 }
                 Bitmap objectBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
 
-                NewItem newItem = new NewItem(cartName, cartCount, cartCost, cartID, cartState, objectBitmap); //reikia susidet kokie laukai yra
+                NewItem newItem = new NewItem(cartName, cartCount, cartCost, cartID, cartState, objectBitmap);
                 returnList.add(newItem);
 
             } while (cursor.moveToNext());
@@ -624,7 +624,6 @@ public class DataBase extends SQLiteOpenHelper {
     public boolean deleteItem(int cart, NewItem item) {
         //search for id in db and if found the delete it
         SQLiteDatabase base = this.getWritableDatabase();
-        //salins tik tuos laukus kurie priklauso tam cartui ir atitinka ta id
         String query = "DELETE FROM " + ITEM_TABLE + " WHERE " + ITEM_CART + " = " + cart + " AND " + ITEM_NAME + " = '" + item.getName() + "'";
 
         Cursor cursor = base.rawQuery(query, null);
@@ -639,7 +638,6 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     public boolean updateCartOnAddedNewItem(NewItem item, int cartID) {
-        //Tai cia noriu kaip idesiu item nauja, kad to carto pasikeistu atitinkami laukai, kaip count ir cost
         SQLiteDatabase baseRead = this.getReadableDatabase();
         int cartCount = 0;
         double cartCost = 0;
@@ -650,7 +648,7 @@ public class DataBase extends SQLiteOpenHelper {
             cartCount = first.getInt(2); // laukas geras
             cartCost = first.getDouble(3); //laukas geras
         } else {
-            Log.i("KLAIDA", "Nepavyko paimti atitinkamo carto informacijos \n");
+            Log.i("Error", "Could not take cart information \n");
             //failed. dont add anything to list
         }
         first.close();
@@ -669,7 +667,6 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     public boolean updateCartOnRemovedNewItem(NewItem item, int cartID) {
-        //Tai cia noriu kaip idesiu item nauja, kad to carto pasikeistu atitinkami laukai, kaip count ir cost
         SQLiteDatabase baseWrite = this.getWritableDatabase();
         SQLiteDatabase baseRead = this.getReadableDatabase();
         int cartCount = 0;

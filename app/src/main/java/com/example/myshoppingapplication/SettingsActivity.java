@@ -4,7 +4,6 @@ package com.example.myshoppingapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.content.Context;
 
@@ -12,9 +11,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
-    private Button pirmas, antras;
+    private Button firstButton, secondButton;
     private Context context = this;
-    private Button delete_item, _cancel;
+    private Button deleteItem, _cancel;
     DataBase dataBaseHelper;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog2;
@@ -24,16 +23,16 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_layout);
 
-        pirmas = (Button) findViewById(R.id.pirmoB);
-        antras = (Button) findViewById(R.id.antroB);
+        firstButton = (Button) findViewById(R.id.pirmoB);
+        secondButton = (Button) findViewById(R.id.antroB);
 
-        pirmas.setOnClickListener(new View.OnClickListener(){
+        firstButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 deleteProfile();
             }
         });
-        antras.setOnClickListener(new View.OnClickListener(){
+        secondButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 deleteDB();
@@ -51,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
         dialogBuilder = new AlertDialog.Builder(this);
         final  View popUpView = getLayoutInflater().inflate(R.layout.confirmation_popup, null);
 
-        delete_item = (Button) popUpView.findViewById(R.id.deleteYes);
+        deleteItem = (Button) popUpView.findViewById(R.id.deleteYes);
         _cancel = (Button) popUpView.findViewById(R.id.deleteNo);
 
         dialogBuilder.setView(popUpView);
@@ -60,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         dataBaseHelper = new DataBase(SettingsActivity.this);
 
-        delete_item.setOnClickListener(new View.OnClickListener() {
+        deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataBaseHelper.ClearProfile();
@@ -79,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
         dialogBuilder = new AlertDialog.Builder(this);
         final  View popUpView = getLayoutInflater().inflate(R.layout.confirmation_popup, null);
 
-        delete_item = (Button) popUpView.findViewById(R.id.deleteYes);
+        deleteItem = (Button) popUpView.findViewById(R.id.deleteYes);
         _cancel = (Button) popUpView.findViewById(R.id.deleteNo);
 
         dialogBuilder.setView(popUpView);
@@ -87,7 +86,7 @@ public class SettingsActivity extends AppCompatActivity {
         dialog2.show();
 
         dataBaseHelper = new DataBase(SettingsActivity.this);
-        delete_item.setOnClickListener(new View.OnClickListener() {
+        deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataBaseHelper.ClearDB();

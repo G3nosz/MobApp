@@ -12,7 +12,7 @@ import android.widget.Button;
 
 
 public class MainActivity extends AppCompatActivity {
-    private Button myButton; //sita naudoti programai uzdaryti, nes nu tipo kad kazka darytu
+    private Button myButton;
     private Button secondActivityButton, thirdActivityButton;
     private Context context = this;
 

@@ -41,7 +41,7 @@ public class CartListAdapter extends ArrayAdapter<NewCart> implements  Filterabl
         TextView price = (TextView) view.findViewById(R.id.antrasView1);
         TextView amount = (TextView) view.findViewById(R.id.treciasView1);
 
-        //zemiau tiesiog papildomos funkcijos skaiciavimai
+
         NewCart item = getItem(position);
 
         int success = dataBaseHelper.loadCartData(item);
@@ -63,7 +63,7 @@ public class CartListAdapter extends ArrayAdapter<NewCart> implements  Filterabl
         }
 
         NewCart cart = getItem(position);
-        int state = item.getState(); //cia state priklauso jei visi jos item state yra true, tuomet cart vadinas yra ivygdytas
+        int state = item.getState(); //State is true if all its items state is true
 
         if (state == 1){ //if true state
             view.setBackgroundColor(Color.parseColor("#778899"));

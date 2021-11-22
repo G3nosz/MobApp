@@ -41,7 +41,6 @@ public class ItemListAdapter extends ArrayAdapter<NewItem> {
         TextView amount = (TextView) view.findViewById(R.id.treciasItemView1);
         ImageView image = (ImageView) view.findViewById(R.id.imageVaizdas);
 
-        //Tuomet cia reikia is duomenu bazes dabar issitraukti ar jis yra bool true ar bool yra false ir pagal tai nustatyti jam spalva
 
 
         NewItem item = getItem(position);
@@ -60,7 +59,7 @@ public class ItemListAdapter extends ArrayAdapter<NewItem> {
         price.setText(String.valueOf(item.getCost()));
         amount.setText(String.valueOf(item.getCount()));
 
-        image.setImageBitmap((item.getImage())); //jia jis ta foto issisaugos atvaizdavimui
+        image.setImageBitmap((item.getImage()));
 
         return view;
     }

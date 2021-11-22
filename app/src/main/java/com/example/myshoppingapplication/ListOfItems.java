@@ -1,10 +1,8 @@
 package com.example.myshoppingapplication;
 
-import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -39,12 +37,12 @@ public class ListOfItems extends AppCompatActivity {
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog2, dialog3, dialog4, dialog9;
-    private EditText newitem_name, newitem_cost, newitem_count;
-    private Button newitem_save, newitem_cancel, newitem_photo, take_image, upload_image;
-    private Button delete_item, edit_item, _cancel;
+    private EditText newitemName, newitemCost, newitemCount;
+    private Button newitemSave, newitemCancel, newitemPhoto, takeImage, uploadImage;
+    private Button deleteItem, editItem, _cancel;
     private ImageView newitemView;
     private ProgressBar bar1;
-    private int proges_bar_proc = 0;
+    private int progesBarProc = 0;
 
     DataBase dataBaseHelper;
     int cartID;
@@ -91,28 +89,28 @@ public class ListOfItems extends AppCompatActivity {
                 int true_count = 0;
                 List<NewItem> temp = dataBaseHelper.getAllItems(cartID);
                 for (NewItem element : temp) {
-                    if(element.getState() == 1){ //surenku visus kur state yra true, tai reiskia, kad jis paimtas
+                    if(element.getState() == 1){
                         true_count += 1;
                     }
                     all_items_count += 1;
                 }
                 if(all_items_count == 0){
-                    proges_bar_proc = 0;
+                    progesBarProc = 0;
                 }
                 else {
-                    proges_bar_proc = true_count * 100 / all_items_count;
+                    progesBarProc = true_count * 100 / all_items_count;
                 }
 
-                bar1.setProgress(proges_bar_proc);
+                bar1.setProgress(progesBarProc);
                 int cartState = dataBaseHelper.getCartState(cartID);
 
-                if(proges_bar_proc == 100){
+                if(progesBarProc == 100){
                     if(cartState == 0){
                         int test = dataBaseHelper.changeCartState(1, cartID);
                         int test2 = dataBaseHelper.updateProfile(cartID);
                     }
                 }
-                else if(proges_bar_proc < 100){
+                else if(progesBarProc < 100){
                     if(cartState == 1){
                         int test = dataBaseHelper.changeCartState(0, cartID);
                     }
@@ -124,7 +122,7 @@ public class ListOfItems extends AppCompatActivity {
     }
     private void changeItemState(NewItem item, int idCart){
         DataBase dataBaseHelper = new DataBase(ListOfItems.this);
-        boolean success = dataBaseHelper.changeItemState(item, idCart); //metodas state pakeisti
+        boolean success = dataBaseHelper.changeItemState(item, idCart);
     }
     private void runThirdActivity(boolean flag) {
         Intent intent = new Intent(context, ProfileInformation.class);
@@ -158,7 +156,7 @@ public class ListOfItems extends AppCompatActivity {
         itemAdapter = new ItemListAdapter(ListOfItems.this, dataBaseHelper.getSelectedItems(cartID, name));
         myListView.setAdapter(itemAdapter);
     }
-    //Tai cia kaip per apatinius navigacijos laukelius spaus atgal per naujo uzkraus ListOfCarts kad atsinaujintu duomenys
+
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(context, ListOfCarts.class);
@@ -183,27 +181,27 @@ public class ListOfItems extends AppCompatActivity {
         }
 
         if(all_items_count == 0){
-            proges_bar_proc = 0;
+            progesBarProc = 0;
         }
         else {
-            proges_bar_proc = true_count * 100 / all_items_count;
+            progesBarProc = true_count * 100 / all_items_count;
         }
 
         int cartState = dataBaseHelper.getCartState(cartID);
 
-        if(proges_bar_proc == 100){
+        if(progesBarProc == 100){
             if(cartState == 0){
                 int test = dataBaseHelper.changeCartState(1, cartID);
                 int test2 = dataBaseHelper.updateProfile(cartID);
             }
         }
-        else if(proges_bar_proc < 100){
+        else if(progesBarProc < 100){
             if(cartState == 1){
                 int test = dataBaseHelper.changeCartState(0, cartID);
             }
         }
 
-        bar1.setProgress(proges_bar_proc);
+        bar1.setProgress(progesBarProc);
     }
 
     @Override
@@ -231,12 +229,12 @@ public class ListOfItems extends AppCompatActivity {
         optionspu.update(0, 150, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         optionspu.showAtLocation(popUpView, Gravity.BOTTOM, 0, 300);
 
-        delete_item = (Button) popUpView.findViewById(R.id.deleteItem);
-        edit_item = (Button) popUpView.findViewById(R.id.editItem);
-        delete_item.setBackgroundColor(getResources().getColor(R.color.Buttonred));
+        deleteItem = (Button) popUpView.findViewById(R.id.deleteItem);
+        editItem = (Button) popUpView.findViewById(R.id.editItem);
+        deleteItem.setBackgroundColor(getResources().getColor(R.color.Buttonred));
 
         final NewItem value1 = value;
-        edit_item.setOnClickListener(new View.OnClickListener() {
+        editItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editItem(value1);
@@ -244,7 +242,7 @@ public class ListOfItems extends AppCompatActivity {
                 optionspu.dismiss();
             }
         });
-        delete_item.setOnClickListener(new View.OnClickListener() {
+        deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteItem(value1);
@@ -256,7 +254,7 @@ public class ListOfItems extends AppCompatActivity {
         dialogBuilder = new AlertDialog.Builder(this);
         final  View popUpView = getLayoutInflater().inflate(R.layout.confirmation_popup, null);
 
-        delete_item = (Button) popUpView.findViewById(R.id.deleteYes);
+        deleteItem = (Button) popUpView.findViewById(R.id.deleteYes);
         _cancel = (Button) popUpView.findViewById(R.id.deleteNo);
 
         dialogBuilder.setView(popUpView);
@@ -264,7 +262,7 @@ public class ListOfItems extends AppCompatActivity {
         dialog2.show();
 
         final NewItem value1 = value;
-        delete_item.setOnClickListener(new View.OnClickListener() {
+        deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataBaseHelper.deleteItem(cartID, value1);
@@ -284,15 +282,15 @@ public class ListOfItems extends AppCompatActivity {
         dialogBuilder = new AlertDialog.Builder(this);
         final  View popUpView = getLayoutInflater().inflate(R.layout.image_select, null);
 
-        take_image = (Button) popUpView.findViewById(R.id.takePicture);
-        upload_image = (Button) popUpView.findViewById(R.id.uploadImage);
+        takeImage = (Button) popUpView.findViewById(R.id.takePicture);
+        uploadImage = (Button) popUpView.findViewById(R.id.uploadImage);
 
 
         dialogBuilder.setView(popUpView);
         dialog9 = dialogBuilder.create();
         dialog9.show();
 
-        upload_image.setOnClickListener(new View.OnClickListener(){
+        uploadImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
@@ -301,11 +299,10 @@ public class ListOfItems extends AppCompatActivity {
                 objectIntent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(objectIntent, PICK_IMAGE_REQUEST);
 
-                //tai tuomet sitoje vietoje reikia kviest tuos 4 kartus iskarto
                 dialog9.dismiss();
             }
         });
-        take_image.setOnClickListener(new View.OnClickListener(){
+        takeImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -324,37 +321,35 @@ public class ListOfItems extends AppCompatActivity {
         dialogBuilder = new AlertDialog.Builder(this);
         final  View popUpView = getLayoutInflater().inflate(R.layout.popupitem, null);
 
-        newitem_name = (EditText) popUpView.findViewById(R.id.newItemName);
-        newitem_count = (EditText) popUpView.findViewById(R.id.newItemCount);
-        newitem_cost = (EditText) popUpView.findViewById(R.id.newItemCost);
-        newitemView = (ImageView) popUpView.findViewById(R.id.newicon); //laukau nufotografuota nuotrauka
+        newitemName = (EditText) popUpView.findViewById(R.id.newItemName);
+        newitemCount = (EditText) popUpView.findViewById(R.id.newItemCount);
+        newitemCost = (EditText) popUpView.findViewById(R.id.newItemCost);
+        newitemView = (ImageView) popUpView.findViewById(R.id.newicon);
 
-        newitem_photo = (Button) popUpView.findViewById(R.id.uploadImage); //fotografavimo mygtukas
+        newitemPhoto = (Button) popUpView.findViewById(R.id.uploadImage);
 
-        newitem_save = (Button) popUpView.findViewById(R.id.saveButton);
-        newitem_cancel = (Button) popUpView.findViewById(R.id.cancelButton);
+        newitemSave = (Button) popUpView.findViewById(R.id.saveButton);
+        newitemCancel = (Button) popUpView.findViewById(R.id.cancelButton);
 
         dialogBuilder.setView(popUpView);
         dialog3 = dialogBuilder.create();
         dialog3.show();
 
-        newitem_photo.setOnClickListener(new View.OnClickListener(){
+        newitemPhoto.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 selectImageAction();
             }
         });
 
-        newitem_save.setOnClickListener(new View.OnClickListener() {
+        newitemSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //aprasomas save mygtukas, tai tiesiog sukuriamas tuscias cart
-                //ir jam priskiriamas pavadinimas
                 NewItem temp = new NewItem();
                 try{
-                    temp.setName(newitem_name.getText().toString());
-                    temp.setCost(Double.parseDouble(newitem_cost.getText().toString())); //reikia gauti cost
-                    temp.setCount(Integer.parseInt(newitem_count.getText().toString()));
+                    temp.setName(newitemName.getText().toString());
+                    temp.setCost(Double.parseDouble(newitemCost.getText().toString())); //reikia gauti cost
+                    temp.setCount(Integer.parseInt(newitemCount.getText().toString()));
                     temp.setImage(imageToStore); //nuotrauka saugoma
 
                     dialog3.dismiss();
@@ -377,7 +372,7 @@ public class ListOfItems extends AppCompatActivity {
             }
         });
 
-        newitem_cancel.setOnClickListener(new View.OnClickListener() {
+        newitemCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog3.dismiss();
@@ -412,47 +407,47 @@ public class ListOfItems extends AppCompatActivity {
     public void editItem(NewItem value){
         dialogBuilder = new AlertDialog.Builder(this);
         final  View popUpView = getLayoutInflater().inflate(R.layout.popupitem, null);
-        newitem_name = (EditText) popUpView.findViewById(R.id.newItemName);
-        newitem_count = (EditText) popUpView.findViewById(R.id.newItemCount);
-        newitem_cost = (EditText) popUpView.findViewById(R.id.newItemCost);
+        newitemName = (EditText) popUpView.findViewById(R.id.newItemName);
+        newitemCount = (EditText) popUpView.findViewById(R.id.newItemCount);
+        newitemCost = (EditText) popUpView.findViewById(R.id.newItemCost);
         final String pirmas = String.valueOf(value.getName());
         final String antras = String.valueOf(value.getCount());
         final String trecias = String.valueOf(value.getCost());
         final Bitmap vaizdas = value.getImage();
 
-        newitemView = (ImageView) popUpView.findViewById(R.id.newicon); //laukau nufotografuota nuotrauka
+        newitemView = (ImageView) popUpView.findViewById(R.id.newicon);
 
-        newitem_photo = (Button) popUpView.findViewById(R.id.uploadImage); //fotografavimo mygtukas
+        newitemPhoto = (Button) popUpView.findViewById(R.id.uploadImage);
 
-        newitem_name.setText(String.valueOf(value.getName()));
-        newitem_count.setText(String.valueOf(value.getCount()));
-        newitem_cost.setText(String.valueOf(value.getCost()));
+        newitemName.setText(String.valueOf(value.getName()));
+        newitemCount.setText(String.valueOf(value.getCount()));
+        newitemCost.setText(String.valueOf(value.getCost()));
         newitemView.setImageBitmap(vaizdas);
 
-        newitem_save = (Button) popUpView.findViewById(R.id.saveButton);
-        newitem_cancel = (Button) popUpView.findViewById(R.id.cancelButton);
+        newitemSave = (Button) popUpView.findViewById(R.id.saveButton);
+        newitemCancel = (Button) popUpView.findViewById(R.id.cancelButton);
 
         dialogBuilder.setView(popUpView);
         dialog4 = dialogBuilder.create();
         dialog4.show();
 
-        newitem_photo.setOnClickListener(new View.OnClickListener(){
+        newitemPhoto.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 selectImageAction();
             }
         });
 
-        newitem_save.setOnClickListener(new View.OnClickListener() {
+        newitemSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NewItem temp = new NewItem();
                 try{
-                    if(!newitem_name.getText().toString().equals(pirmas) || !newitem_cost.getText().toString().equals(antras) || !newitem_count.getText().toString().equals(trecias)){
+                    if(!newitemName.getText().toString().equals(pirmas) || !newitemCost.getText().toString().equals(antras) || !newitemCount.getText().toString().equals(trecias)){
 
-                        temp.setName(newitem_name.getText().toString());
-                        temp.setCost(Double.parseDouble(newitem_cost.getText().toString())); //reikia gauti cost
-                        temp.setCount(Integer.parseInt(newitem_count.getText().toString()));
+                        temp.setName(newitemName.getText().toString());
+                        temp.setCost(Double.parseDouble(newitemCost.getText().toString()));
+                        temp.setCount(Integer.parseInt(newitemCount.getText().toString()));
                         if(imageToStore == null){
                             temp.setImage(vaizdas);
                         }
@@ -477,7 +472,7 @@ public class ListOfItems extends AppCompatActivity {
             }
         });
 
-        newitem_cancel.setOnClickListener(new View.OnClickListener() {
+        newitemCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog4.dismiss();

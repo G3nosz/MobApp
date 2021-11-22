@@ -6,7 +6,7 @@ public class NewItem {
     private String name;
     private int count;
     private double cost;
-    private int state; //true yra kad item yra paimtas, false kad item yra nepaimtas
+    private int state; //true-1 if taken, false-0 if not
     private int id;
     private int cartID;
 
@@ -20,7 +20,7 @@ public class NewItem {
         this.name = name;
         this.count = count;
         this.cost = cost;
-        this.state = 0; //false reiskia kad item nera pazymetas, tai as renku kur state yra true kad item yra paimta
+        this.state = 0;
     }
     public NewItem(String name, int count, double cost, int cartID,int state, Bitmap photoe){
         this.name = name;

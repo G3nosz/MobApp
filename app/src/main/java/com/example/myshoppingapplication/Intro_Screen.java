@@ -14,7 +14,7 @@ public class Intro_Screen extends AppCompatActivity {
           @Override
           public void run() {
               try {
-                  sleep(1500); //2sec
+                  sleep(1500);
                   Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                   startActivity(intent);
                   overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
